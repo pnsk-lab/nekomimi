@@ -4,7 +4,10 @@
 
 org 0x7e00
 main:
-	call clear 
+	mov si, dx
+	mov dl, [si]
+	mov [drive], dl
+	call clear
 	mov si, tline
 	call print_str
 	mov si, newline
@@ -23,6 +26,13 @@ main:
 	call number_to_string
 	call print_str
 	mov si, kb
+	call print_str
+	mov si, booted_from
+	call print_str
+	mov ax, [drive]
+	call number_to_hex_string
+	call print_str
+	mov si, newline
 	call print_str
 	jmp $
 
@@ -141,6 +151,31 @@ number_to_string:
 	inc si
 	ret
 
+number_to_hex_string:
+	mov si, number
+	add si, 30
+	push ax
+	push bx
+	push dx
+.loop:
+	xor dx, dx
+	mov bx, 16
+	div bx
+	push si
+	mov si, hex
+	add si, dx
+	mov dx, [si]
+	pop si
+	mov byte [si], dl	
+	dec si
+	cmp ax, 0
+	jne .loop
+	pop dx
+	pop bx
+	pop ax
+	inc si
+	ret
+
 tline:		db "  "
 		times 76 db 0xdc
 		db "  "
@@ -158,15 +193,22 @@ version:	db "DISK BASIC FOR PC COMPATIBLES V"
 copyright:	db "Copyright (C) 2024 by Nishi/pnsk-lab"
 		db 0
 
+booted_from:	db "Booted from BIOS drive 0x"
+		db 0
+
 newline:	db 0xd
 		db 0xa
 		db 0
-
-number:		times 32 db 0
 
 kb:		db "KB real-mode memory present"
 		db 0xd
 		db 0xa
 		db 0
+
+hex:		db "0123456789ABCDEF"
+
+number:		times 32 db 0
+
+drive:		db 0
 
 times ((16 * 512) - ($ - $$)) db 0

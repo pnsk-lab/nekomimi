@@ -28,6 +28,7 @@ boot:
 	mov es, bx
 	mov bx, 0x7e00
 	int 0x13
+	mov dx, drive
 	jmp 0:0x7e00
 
 drive: db 0
