@@ -13,15 +13,16 @@ main:
 	call center_print
 	mov si, newline
 	call print_str
-	mov si, svnid
-	call center_print
-	mov si, newline
-	call print_str
 	mov si, copyright
 	call center_print
 	mov si, newline
 	call print_str
 	mov si, bline
+	call print_str
+	int 0x12
+	call number_to_string
+	call print_str
+	mov si, kb
 	call print_str
 	jmp $
 
@@ -119,6 +120,27 @@ print_str:
 	pop ax
 	ret
 
+number_to_string:
+	mov si, number
+	add si, 30
+	push ax
+	push bx
+	push dx
+.loop:
+	xor dx, dx
+	mov bx, 10
+	div bx
+	add dx, '0'
+	mov byte [si], dl	
+	dec si
+	cmp ax, 0
+	jne .loop
+	pop dx
+	pop bx
+	pop ax
+	inc si
+	ret
+
 tline:		db "  "
 		times 76 db 0xdc
 		db "  "
@@ -129,7 +151,8 @@ bline:		db "  "
 		db "  "
 		db 0
 	
-version:	db "DISK BASIC FOR PC COMPATIBLES"
+version:	db "DISK BASIC FOR PC COMPATIBLES V"
+		db VERSION
 		db 0
 
 copyright:	db "Copyright (C) 2024 by Nishi/pnsk-lab"
@@ -139,7 +162,11 @@ newline:	db 0xd
 		db 0xa
 		db 0
 
-svnid:		db "$Id$"
+number:		times 32 db 0
+
+kb:		db "KB real-mode memory present"
+		db 0xd
+		db 0xa
 		db 0
 
 times ((16 * 512) - ($ - $$)) db 0
