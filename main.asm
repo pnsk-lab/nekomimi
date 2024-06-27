@@ -132,7 +132,7 @@ bline:		db "  "
 version:	db "DISK BASIC FOR PC COMPATIBLES"
 		db 0
 
-copyright:	db "Copyright (C) 2024 by Nishi"
+copyright:	db "Copyright (C) 2024 by Nishi/pnsk-lab"
 		db 0
 
 newline:	db 0xd
