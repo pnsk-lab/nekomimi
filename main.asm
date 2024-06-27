@@ -34,7 +34,13 @@ main:
 	call print_str
 	mov si, newline
 	call print_str
-	jmp $
+.loop:
+	mov ah, 0
+	int 0x16
+	mov bl, 0x07
+	mov ah, 0x0e
+	int 0x10
+	jmp .loop
 
 center_print:
 	push ax
