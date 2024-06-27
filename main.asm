@@ -13,6 +13,10 @@ main:
 	call center_print
 	mov si, newline
 	call print_str
+	mov si, svnid
+	call center_print
+	mov si, newline
+	call print_str
 	mov si, copyright
 	call center_print
 	mov si, newline
@@ -133,6 +137,9 @@ copyright:	db "Copyright (C) 2024 by Nishi"
 
 newline:	db 0xd
 		db 0xa
+		db 0
+
+svnid:		db "$Id$"
 		db 0
 
 times ((16 * 512) - ($ - $$)) db 0
