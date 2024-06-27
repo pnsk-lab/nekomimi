@@ -4,6 +4,9 @@
 
 org 0x7e00
 main:
+	mov ah, 0
+	mov al, 0xe
+	int 0x10
 	mov si, dx
 	mov dl, [si]
 	mov [drive], dl
@@ -37,7 +40,9 @@ main:
 .loop:
 	mov ah, 0
 	int 0x16
-	mov bl, 0x07
+	mov bl, [bgcolor]
+	shl bl, 4
+	or bl, [fgcolor]
 	mov ah, 0x0e
 	int 0x10
 	jmp .loop
@@ -81,12 +86,12 @@ clear:
 	push bx
 	push cx
 	push dx
-	mov bh, 0x07
+	mov bh, [bgcolor]
 	mov al, 0
 	mov ch, 0
 	mov cl, 0
 	mov dh, 24
-	mov dl, 80
+	mov dl, 79
 	mov ah, 6
 	int 0x10
 	mov bh, 0
@@ -123,7 +128,10 @@ print_str:
 	xor ax, ax
 .loop:
 	mov al, [si]
-	mov bl, 0x07
+	mov bh, 0
+	mov bl, [bgcolor]
+	shl bl, 4
+	or bl, [fgcolor]
 	mov ah, 0x0e
 	int 0x10
 	inc si
@@ -216,6 +224,10 @@ hex:		db "0123456789ABCDEF"
 number:		times 32 db 0
 
 drive:		db 0
+
+bgcolor:	db 0
+
+fgcolor:	db 0xf
 
 times ((16 * 512) - ($ - $$)) db 0
 times ((1440 * 1024 - 512) - ($ - $$)) db 0
