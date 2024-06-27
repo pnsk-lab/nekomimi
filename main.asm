@@ -212,3 +212,4 @@ number:		times 32 db 0
 drive:		db 0
 
 times ((16 * 512) - ($ - $$)) db 0
+times ((1440 * 1024 - 512) - ($ - $$)) db 0
