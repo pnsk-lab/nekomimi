@@ -4,9 +4,19 @@
 
 org 0x7e00
 main:
+%ifdef TEXT
+	mov ah, 0
+	mov al, 0x0
+	int 0x10
+	mov ah, 0
+	mov al, 0x3
+	int 0x10
+%endif
+%ifdef GRAPHIC
 	mov ah, 0
 	mov al, 0xe
 	int 0x10
+%endif
 	mov si, dx
 	mov dl, [si]
 	mov [drive], dl
