@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: all run clean
+.PHONY: all run clean get-version
 
 all: basic.img
 
@@ -17,6 +17,9 @@ main.bin: main.asm
 
 run: basic.img
 	qemu-system-i386 -fda basic.img
+
+get-version:
+	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+"
 
 clean:
 	rm -f *.bin *.img
