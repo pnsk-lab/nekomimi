@@ -32,6 +32,8 @@ hex:		db "0123456789ABCDEF"
 
 number:		times 32 db 0
 
+db 0
+
 line:		times 1024 db 0
 
 keyb:		db 0
@@ -41,3 +43,8 @@ drive:		db 0
 bgcolor:	db 0
 
 fgcolor:	db 0x7
+
+bs:		db 0x8
+		db " "
+		db 0x8
+		db 0

@@ -44,6 +44,8 @@ main:
 	mov [keyb], al
 	cmp al, 0xd
 	je .enter
+	cmp al, 0x8
+	je .backspace
 	jmp .print
 .enter:
 	mov si, newline
@@ -55,6 +57,15 @@ main:
 	mov si, line
 	mov byte [si], 0
 	xor cx, cx
+	jmp .brk
+.backspace:
+	mov si, bs
+	call print_str
+	mov si, line
+	call strlen
+	add si, ax
+	dec si
+	mov byte [si], 0
 	jmp .brk
 .print:
 	mov si, line
