@@ -12,14 +12,14 @@ basic.img: boot.bin main.bin
 boot.bin: boot.asm
 	nasm -D$(TARGET) -fbin -o boot.bin boot.asm
 
-main.bin: main.asm
+main.bin: main.asm var.asm util.asm basic.asm
 	nasm -D$(TARGET) -fbin -o main.bin main.asm
 
 run: basic.img
 	qemu-system-i386 -fda basic.img
 
 get-version:
-	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+"
+	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+(-[a-z\-]+)?"
 
 clean:
 	rm -f *.bin *.img

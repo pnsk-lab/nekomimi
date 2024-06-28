@@ -40,4 +40,4 @@ drive:		db 0
 
 bgcolor:	db 0
 
-fgcolor:	db 0xf
+fgcolor:	db 0x7

@@ -1,6 +1,6 @@
 ; $Id$
 
-%define VERSION "0.0"
+%define VERSION "0.0-beta"
 
 org 0x7e00
 main:
