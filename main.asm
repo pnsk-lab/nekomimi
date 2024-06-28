@@ -63,9 +63,13 @@ main:
 	call print_str
 	mov si, line
 	call strlen
+	cmp ax, 0
+	je .dont
 	add si, ax
 	dec si
 	mov byte [si], 0
+	dec cx
+.dont:
 	jmp .brk
 .print:
 	mov si, line
