@@ -76,4 +76,4 @@ main:
 %include "var.asm"
 
 times ((16 * 512) - ($ - $$)) db 0
-times ((1440 * 1024 - 512) - ($ - $$)) db 0
+times ((SECTORS * 1024 - 512) - ($ - $$)) db 0
