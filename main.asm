@@ -37,197 +37,43 @@ main:
 	call print_str
 	mov si, newline
 	call print_str
+	xor cx, cx
 .loop:
 	mov ah, 0
 	int 0x16
-	mov bl, [bgcolor]
-	shl bl, 4
-	or bl, [fgcolor]
-	mov ah, 0x0e
-	int 0x10
-	jmp .loop
-
-center_print:
-	push ax
-	push bx
-	push cx
-	push dx
-	call strlen
-	shr ax, 1
-	mov cx, ax
-	mov ax, 40
-	sub ax, cx
-	mov bh, 0
-	push ax
-	push bx
-	push cx
-	mov ah, 3
-	mov bh, 0
-	int 0x10
-	pop cx
-	pop bx
-	pop ax
-	mov dl, al
-	mov ah, 2
-	int 0x10
-	call print_str
-	push si
+	mov [keyb], al
+	cmp al, 0xd
+	je .enter
+	jmp .print
+.enter:
 	mov si, newline
 	call print_str
-	pop si
-	pop dx
-	pop cx
-	pop bx
-	pop ax
-	ret
-
-clear:
-	push ax
-	push bx
-	push cx
-	push dx
-	mov bh, [bgcolor]
-	mov al, 0
-	mov ch, 0
-	mov cl, 0
-	mov dh, 24
-	mov dl, 79
-	mov ah, 6
-	int 0x10
-	mov bh, 0
-	mov dh, 0
-	mov dl, 0
-	mov ah, 2
-	int 0x10
-	pop dx
-	pop cx
-	pop bx
-	pop ax
-	ret
-
-strlen:
-	push si
-	push cx
-	xor ax, ax
-.loop:
-	mov ch, [si]
-	inc ax
+	mov si, line
+	call print_str
+	mov si, newline
+	call print_str
+	mov si, line
+	mov byte [si], 0
+	xor cx, cx
+	jmp .brk
+.print:
+	mov si, line
+	add si, cx
+	inc cx
+	mov byte [si], al
 	inc si
-	mov ch, [si]
-	cmp ch, 0
-	jne .loop
-	pop cx
-	pop si
-	ret
-
-print_str:
-	push ax
-	push bx
-	push si
-	push cx
-	xor ax, ax
-.loop:
-	mov al, [si]
-	mov bh, 0
+	mov byte [si], 0
 	mov bl, [bgcolor]
 	shl bl, 4
 	or bl, [fgcolor]
 	mov ah, 0x0e
 	int 0x10
-	inc si
-	mov ch, [si]
-	cmp ch, 0
-	jne .loop
-	pop cx
-	pop si
-	pop bx
-	pop ax
-	ret
+.brk:
+	jmp .loop
 
-number_to_string:
-	mov si, number
-	add si, 30
-	push ax
-	push bx
-	push dx
-.loop:
-	xor dx, dx
-	mov bx, 10
-	div bx
-	add dx, '0'
-	mov byte [si], dl	
-	dec si
-	cmp ax, 0
-	jne .loop
-	pop dx
-	pop bx
-	pop ax
-	inc si
-	ret
-
-number_to_hex_string:
-	mov si, number
-	add si, 30
-	push ax
-	push bx
-	push dx
-.loop:
-	xor dx, dx
-	mov bx, 16
-	div bx
-	push si
-	mov si, hex
-	add si, dx
-	mov dx, [si]
-	pop si
-	mov byte [si], dl	
-	dec si
-	cmp ax, 0
-	jne .loop
-	pop dx
-	pop bx
-	pop ax
-	inc si
-	ret
-
-tline:		db "  "
-		times 76 db 0xdc
-		db "  "
-		db 0
-
-bline:		db "  "
-		times 76 db 0xdf
-		db "  "
-		db 0
-	
-version:	db "DISK BASIC FOR PC COMPATIBLES V"
-		db VERSION
-		db 0
-
-copyright:	db "Copyright (C) 2024 by Nishi/pnsk-lab"
-		db 0
-
-booted_from:	db "Booted from BIOS drive 0x"
-		db 0
-
-newline:	db 0xd
-		db 0xa
-		db 0
-
-kb:		db "KB real-mode memory present"
-		db 0xd
-		db 0xa
-		db 0
-
-hex:		db "0123456789ABCDEF"
-
-number:		times 32 db 0
-
-drive:		db 0
-
-bgcolor:	db 0
-
-fgcolor:	db 0xf
+%include "basic.asm"
+%include "util.asm"
+%include "var.asm"
 
 times ((16 * 512) - ($ - $$)) db 0
 times ((1440 * 1024 - 512) - ($ - $$)) db 0
