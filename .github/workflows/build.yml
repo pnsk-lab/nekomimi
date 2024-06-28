@@ -22,7 +22,7 @@ jobs:
     - name: Install
       run: sudo apt-get install nasm
     - name: Make
-      uses: make
+      run: make
     - name: Delete old release
       run: gh release delete "$(make get-version)" --cleanup-tag -y || true
       env:
