@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: all clean
+.PHONY: all run clean
 
 all: basic.img
 
@@ -14,6 +14,9 @@ boot.bin: boot.asm
 
 main.bin: main.asm
 	nasm -D$(TARGET) -fbin -o main.bin main.asm
+
+run: basic.img
+	qemu-system-i386 -fda basic.img
 
 clean:
 	rm -f *.bin *.img
