@@ -62,6 +62,9 @@ strlen:
 	push si
 	push cx
 	xor ax, ax
+	mov ch, [si]
+	cmp ch, 0
+	je .brk
 .loop:
 	mov ch, [si]
 	inc ax
@@ -69,6 +72,7 @@ strlen:
 	mov ch, [si]
 	cmp ch, 0
 	jne .loop
+.brk:
 	pop cx
 	pop si
 	ret
@@ -79,6 +83,9 @@ print_str:
 	push si
 	push cx
 	xor ax, ax
+	mov al, [si]
+	cmp al, 0
+	je .brk
 .loop:
 	mov al, [si]
 	mov bh, 0
@@ -91,6 +98,7 @@ print_str:
 	mov ch, [si]
 	cmp ch, 0
 	jne .loop
+.brk:
 	pop cx
 	pop si
 	pop bx
