@@ -1,4 +1,5 @@
 ; $Id$
+
 tline:		db "  "
 		times 76 db 0xdc
 		db "  "
@@ -48,7 +49,12 @@ bgcolor:	db 0
 
 fgcolor:	db 0x7
 
+retcode:	dw 0
+
 bs:		db 0x8
 		db " "
 		db 0x8
+		db 0
+	
+CLS:		db "CLS"
 		db 0

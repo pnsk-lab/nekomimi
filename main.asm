@@ -1,5 +1,8 @@
 ; $Id$
 
+%define SUCCESS		0
+%define SYNTAX_ERROR	1
+
 %define VERSION "0.0-beta"
 
 org 0x500
@@ -61,9 +64,7 @@ main:
 	mov si, newline
 	call print_str
 	mov si, line
-	call print_str
-	mov si, newline
-	call print_str
+	call run
 	mov si, line
 	mov byte [si], 0
 	xor cx, cx

@@ -157,3 +157,51 @@ number_to_hex_string:
 	pop ax
 	inc si
 	ret
+
+strequ:
+	push si
+	mov si, di
+	call strlen
+	mov bx, ax
+	pop si
+	call strlen
+	cmp ax, bx
+	je .equ
+	mov ax, 0
+	ret
+.equ:
+	call strlen
+	mov bx, ax
+	call strlen
+	push si
+	push di
+	push cx
+	mov cl, [si]
+	mov ch, [di]
+	cmp cl, 0
+	je .brk
+	cmp cl, ch
+	jne .badbrk
+	inc si
+	inc di
+.brk:
+	pop cx
+	pop di
+	pop si
+	mov ax, 1
+	ret
+.badbrk:
+	pop cx
+	pop di
+	pop si
+	mov ax, 0
+	ret
+
+uppercase:
+	cmp al, 'a'
+	jl .brk
+	cmp al, 'z'
+	jg .brk
+	sub al, 'a' - 'A'
+.brk:
+	ret
