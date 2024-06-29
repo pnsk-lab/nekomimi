@@ -39,9 +39,14 @@ clear:
 	push bx
 	push cx
 	push dx
+%ifdef GRAPHIC
+	mov bh, [bgcolor]
+%endif
+%ifdef TEXT
 	mov bh, [bgcolor]
 	shl bh, 4
 	or bh, [fgcolor]
+%endif
 	mov al, 0
 	mov ch, 0
 	mov cl, 0
