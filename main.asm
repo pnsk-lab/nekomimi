@@ -2,7 +2,7 @@
 
 %define VERSION "0.0-beta"
 
-org 0x7e00
+org 0x500
 main:
 %ifdef TEXT
 	mov ah, 0
@@ -100,5 +100,5 @@ main:
 %include "util.asm"
 %include "var.asm"
 
-times ((16 * 512) - ($ - $$)) db 0
-times ((SECTORS * 1024 - 512) - ($ - $$)) db 0
+times ((BASIC_SIZE * 512) - ($ - $$)) db 0
+times ((KB * 1024 - 512) - ($ - $$)) db 0
