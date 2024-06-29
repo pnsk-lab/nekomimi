@@ -1,11 +1,13 @@
 ; $Id$
 
+%include "common.asm"
+
 %define SUCCESS		0
 %define SYNTAX_ERROR	1
 
 %define VERSION "0.0-beta"
 
-org 0x500
+org LOAD_AT
 main:
 %ifdef TEXT
 	mov ah, 0
@@ -20,9 +22,11 @@ main:
 	mov al, 0xe
 	int 0x10
 %endif
+%ifndef NOT_FLOPPY
 	mov si, dx
 	mov dl, [si]
 	mov [drive], dl
+%endif
 	call clear
 	mov si, tline
 	call print_str
@@ -43,6 +47,7 @@ main:
 	call print_str
 	mov si, kb
 	call print_str
+%ifndef NOT_FLOPPY
 	mov si, booted_from
 	call print_str
 	mov ax, [drive]
@@ -50,6 +55,7 @@ main:
 	call print_str
 	mov si, newline
 	call print_str
+%endif
 	xor cx, cx
 .loop:
 	mov ah, 0
@@ -102,4 +108,6 @@ main:
 %include "var.asm"
 
 times ((BASIC_SIZE * 512) - ($ - $$)) db 0
+%ifndef NOT_FLOPPY
 times ((KB * 1024 - 512) - ($ - $$)) db 0
+%endif

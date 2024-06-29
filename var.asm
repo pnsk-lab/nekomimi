@@ -44,7 +44,9 @@ line:		times 1024 db 0
 
 keyb:		db 0
 
+%ifndef NOT_FLOPPY
 drive:		db 0
+%endif
 
 bgcolor:	db 0
 
