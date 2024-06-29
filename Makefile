@@ -24,4 +24,4 @@ get-version:
 	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+(-[a-z\-]+)?"
 
 clean:
-	rm -f *.bin *.img
+	rm -f *.bin basic.img

@@ -29,11 +29,19 @@ jobs:
       run: make clean
     - name: Make
       run: make
+    - name: Rename
+      run: mv basic.img basic-graphic.img
+    - name: Clean
+      run: make clean
+    - name: Make
+      run: make MODE=TEXT
+    - name: Rename
+      run: mv basic.img basic-text.img
     - name: Delete old release
       run: gh release delete "$(make get-version)" --cleanup-tag -y || true
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Release
-      run: gh release create -t "v$(make get-version)" "$(make get-version)" basic.img -n "Version \`$(make get-version)\` was built in this release"
+      run: gh release create -t "v$(make get-version)" "$(make get-version)" basic-graphic.img basic-text.img -n "Version \`$(make get-version)\` was built in this release"
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
