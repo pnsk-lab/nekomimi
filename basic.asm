@@ -25,6 +25,18 @@ run:
 	cmp cx, 1
 	je .nocall
 	call rundirective
+	mov dx, list
+	shl ax, 1
+	add dx, ax
+	push bx
+	mov bx, dx
+	push si
+	mov si, [bx]
+	call print_str
+	mov si, newline
+	call print_str
+	pop si
+	pop bx
 .nocall:
 	pop si
 	pop dx
@@ -43,6 +55,8 @@ rundirective:
 	push dx
 .until:
 	mov al, [si]
+	cmp al, 0
+	je .brk
 	cmp al, ' '
 	jne .brk
 	inc si
@@ -54,6 +68,8 @@ rundirective:
 	call uppercase
 	mov [si], al
 	cmp al, ' '
+	je .brk2
+	cmp al, 0
 	je .brk2
 	inc si
 	jmp .until2
