@@ -8,8 +8,12 @@ bline:		db "  "
 		times 76 db 0xdf
 		db "  "
 		db 0
-	
-version:	db "DISK BASIC FOR PC COMPATIBLES V"
+
+version:
+%ifdef GRAPHIC
+		db "GRAPHICAL "
+%endif
+		db "DISK BASIC FOR PC COMPATIBLES V"
 		db VERSION
 		db 0
 
