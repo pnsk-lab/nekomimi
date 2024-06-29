@@ -6,6 +6,10 @@ on:
   schedule:
   - cron: "0 */6 * * *"
 
+concurrency:
+  group: "build"
+  cancel-in-progress: true
+
 jobs:
   build-release:
     
