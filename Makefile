@@ -7,15 +7,16 @@ all: basic.img
 TARGET=PC_COMPAT
 KB=1440
 MODE=GRAPHIC
+BASIC_SIZE=8
 
 basic.img: boot.bin main.bin
 	cat boot.bin main.bin > basic.img
 
 boot.bin: boot.asm
-	nasm -DBASIC_SIZE=8 -D$(TARGET) -D$(MODE) -DKB=$(KB) -fbin -o boot.bin boot.asm
+	nasm -DSIZE=\"`expr $(BASIC_SIZE) \* 512 / 1024`K\" -DBASIC_SIZE=$(BASIC_SIZE) -D$(TARGET) -D$(MODE) -DKB=$(KB) -fbin -o boot.bin boot.asm
 
 main.bin: main.asm var.asm util.asm basic.asm
-	nasm -DBASIC_SIZE=8 -D$(TARGET) -D$(MODE) -DKB=$(KB) -fbin -o main.bin main.asm
+	nasm -DSIZE=\"`expr $(BASIC_SIZE) \* 512 / 1024`K\" -DBASIC_SIZE=$(BASIC_SIZE) -D$(TARGET) -D$(MODE) -DKB=$(KB) -fbin -o main.bin main.asm
 
 run: basic.img
 	qemu-system-i386 -fda basic.img

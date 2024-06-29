@@ -14,7 +14,8 @@ version:
 %ifdef GRAPHIC
 		db "GRAPHICAL "
 %endif
-		db "DISK BASIC FOR PC/AT COMPATIBLES V"
+		db SIZE
+		db " DISK BASIC FOR PC/AT COMPATIBLES V"
 		db VERSION
 		db 0
 
