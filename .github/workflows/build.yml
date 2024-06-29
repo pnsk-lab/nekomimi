@@ -25,6 +25,8 @@ jobs:
       uses: actions/checkout@v4
     - name: Install
       run: sudo apt-get install nasm
+    - name: Clean
+      run: make clean
     - name: Make
       run: make
     - name: Delete old release
