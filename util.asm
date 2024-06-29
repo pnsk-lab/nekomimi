@@ -40,6 +40,8 @@ clear:
 	push cx
 	push dx
 	mov bh, [bgcolor]
+	shl bh, 4
+	or bh, [fgcolor]
 	mov al, 0
 	mov ch, 0
 	mov cl, 0
