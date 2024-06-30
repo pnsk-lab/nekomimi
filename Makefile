@@ -8,7 +8,7 @@ TARGET=PC_COMPAT
 KB=1440
 MODE=GRAPHIC
 BASIC_SIZE=8
-LOAD_AT=0x0100
+LOAD_AT=0x0500
 
 basic.img: boot.bin main.bin
 	cat boot.bin main.bin > basic.img

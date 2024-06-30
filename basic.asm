@@ -48,6 +48,9 @@ run:
 
 rundirective:
 	mov byte [retcode], SUCCESS
+	call strlen
+	cmp ax, 0
+	je .retzero
 	push si
 	push ax
 	push bx
@@ -92,4 +95,6 @@ rundirective:
 	pop ax
 	pop si
 	mov ax, [retcode]
+	ret
+.retzero:
 	ret
