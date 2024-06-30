@@ -61,7 +61,10 @@ bs:		db 0x8
 	
 CLS:		db "CLS"
 		db 0
-	
+
+LOAD:		db "LOAD"
+		db 0
+
 list:		dw ok_msg
 		dw synerr_msg
 

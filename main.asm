@@ -107,6 +107,8 @@ main:
 %include "util.asm"
 %include "var.asm"
 
+bas_size: dw ($ - $$)
+
 times ((BASIC_SIZE * 512) - ($ - $$)) db 0
 %ifndef NOT_FLOPPY
 times ((KB * 1024 - 512) - ($ - $$)) db 0

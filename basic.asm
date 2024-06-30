@@ -66,16 +66,19 @@ rundirective:
 	jmp .until
 .brk: ; si is trimmed
 	push si
+	xor cx, cx
 .until2:
 	mov al, [si]
 	call uppercase
 	mov [si], al
 	cmp al, ' '
-	je .brk2
+	je .brk3
 	cmp al, 0
 	je .brk2
 	inc si
 	jmp .until2
+.brk3:
+	mov cx, 1
 .brk2:
 	mov byte [si], 0
 	pop si
@@ -83,11 +86,27 @@ rundirective:
 	call strequ
 	cmp ax, 1
 	je .CLS
+	mov di, LOAD
+	call strequ
+	cmp ax, 1
+	je .LOAD
 	mov byte [retcode], SYNTAX_ERROR
 	jmp .ret
 .CLS:
 	call clear
 	jmp .ret
+.LOAD:
+	cmp cx, 0
+	je .synerr
+	call strlen
+	add si, ax
+	inc si
+	call strlen
+	cmp ax, 0
+	je .synerr
+	jmp .ret
+.synerr:
+	mov byte [retcode], SYNTAX_ERROR
 .ret:
 	pop dx
 	pop cx
