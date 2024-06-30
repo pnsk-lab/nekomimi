@@ -12,10 +12,10 @@ bline:		db "  "
 
 version:
 %ifdef GRAPHIC
-		db "GRAPHICAL "
+		db "(Graphical) "
 %endif
 		db SIZE
-		db " DISK BASIC FOR PC/AT COMPATIBLES V"
+		db " Nekomimi Programming Language V"
 		db VERSION
 		db 0
 
