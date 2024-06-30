@@ -103,7 +103,7 @@ main:
 .brk:
 	jmp .loop
 
-%include "basic.asm"
+%include "nekomimi.asm"
 %include "util.asm"
 %include "var.asm"
 
