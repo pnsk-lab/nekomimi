@@ -56,58 +56,30 @@ rundirective:
 	push bx
 	push cx
 	push dx
-.until:
 	mov al, [si]
-	cmp al, 0
-	je .brk
-	cmp al, ' '
-	jne .brk
+	call uppercase
+	cmp al, 'C'
+	je .CLS
+	cmp al, 'D'
+	je .DEF
+	mov byte [retcode], SYNTAX_ERROR
+	jmp .brk
+.CLS:
+	call clear
+	jmp .brk
+.DEF:
+	call strlen
+	cmp ax, 2
+	jl .synerr
 	inc si
-	jmp .until
-.brk: ; si is trimmed
-	push si
-	xor cx, cx
-.until2:
 	mov al, [si]
 	call uppercase
 	mov [si], al
-	cmp al, ' '
-	je .brk3
-	cmp al, 0
-	je .brk2
-	inc si
-	jmp .until2
-.brk3:
-	mov cx, 1
-.brk2:
-	mov byte [si], 0
-	pop si
-	mov di, CLS
-	call strequ
-	cmp ax, 1
-	je .CLS
-	mov di, LOAD
-	call strequ
-	cmp ax, 1
-	je .LOAD
-	mov byte [retcode], SYNTAX_ERROR
-	jmp .ret
-.CLS:
-	call clear
-	jmp .ret
-.LOAD:
-	cmp cx, 0
-	je .synerr
-	call strlen
-	add si, ax
-	inc si
-	call strlen
-	cmp ax, 0
-	je .synerr
-	jmp .ret
+	call print_str
+	jmp .brk
 .synerr:
 	mov byte [retcode], SYNTAX_ERROR
-.ret:
+.brk:
 	pop dx
 	pop cx
 	pop bx

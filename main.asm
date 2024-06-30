@@ -19,7 +19,7 @@ main:
 %endif
 %ifdef GRAPHIC
 	mov ah, 0
-	mov al, 0xe
+	mov al, GRAPHIC_MODE
 	int 0x10
 %endif
 %ifndef NOT_FLOPPY
