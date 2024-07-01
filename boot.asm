@@ -130,8 +130,7 @@ boot:
 	mov es, bp
 	mov bp, 0x500
 	mov cx, 8
-	mov bl, 0x07
-	mov bh, 0
+	mov bx, 0x0007
 	mov ax, 0x1301
 	int 0x10
 	mov al, '.'
@@ -147,8 +146,7 @@ boot:
 	mov es, bp
 	mov bp, 0x500+8
 	mov cx, 3
-	mov bl, 0x07
-	mov bh, 0
+	mov bx, 0x0007
 	mov ax, 0x1301
 	int 0x10
 	pop bp
