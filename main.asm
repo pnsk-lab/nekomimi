@@ -4,6 +4,9 @@
 
 %define SUCCESS		0
 %define SYNTAX_ERROR	1
+%define START		(0x500 + BASIC_SIZE * 512)
+%define VARSIZE		128
+%define END_VAR		(0x500 + BASIC_SIZE * 512 + (2 + VARSIZE) * 26)
 
 %define VERSION "0.0-beta"
 

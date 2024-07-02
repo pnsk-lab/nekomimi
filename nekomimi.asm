@@ -74,8 +74,9 @@ rundirective:
 	inc si
 	mov al, [si]
 	call uppercase
-	mov [si], al
-	call print_str
+	call get_variable_address
+	mov di, bx
+	jmp $
 	jmp .brk
 .synerr:
 	mov byte [retcode], SYNTAX_ERROR
@@ -88,4 +89,15 @@ rundirective:
 	mov ax, [retcode]
 	ret
 .retzero:
+	ret
+
+get_variable_address:
+	mov bx, START
+	push ax
+	sub al, 'A'
+	mov cl, al
+	mov al, VARSIZE + 2
+	mul cx
+	add bx, ax
+	pop ax
 	ret

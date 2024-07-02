@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: all run clean get-version nekomimi.com
+.PHONY: all run run-dos clean get-version nekomimi.com
 
 all: nekomimi.img
 
@@ -11,8 +11,17 @@ BASIC_SIZE=8
 LOAD_AT=0x0500
 GRAPHIC_MODE=0xe
 
+DOSBOX=dosbox
+
 nekomimi.img: floppy.asm boot.bin main.bin
 	nasm -fbin -o nekomimi.img -DBASIC_SIZE=$(BASIC_SIZE) -DKB=$(KB) floppy.asm
+
+run-dos: nekomimi.com
+	echo "[autoexec]" > dosbox.conf
+	echo "mount c: ." >> dosbox.conf
+	echo "c:" >> dosbox.conf
+	echo "nekomimi" >> dosbox.conf
+	$(DOSBOX)
 
 nekomimi.com:
 	$(MAKE) main.bin CUSTOM="-DDOS" MODE="$(MODE)" TARGET="$(TARGET)" BASIC_SIZE="$(BASIC_SIZE)" GRAPHIC_MODE="$(GRAPHIC_MODE)" LOAD_AT=0x0100
@@ -31,4 +40,4 @@ get-version:
 	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+(-[a-z\-]+)?"
 
 clean:
-	rm -f *.bin nekomimi.img *.com
+	rm -f *.bin nekomimi.img *.com dosbox.conf
