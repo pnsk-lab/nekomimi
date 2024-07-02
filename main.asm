@@ -23,8 +23,6 @@ main:
 	int 0x10
 %endif
 %ifndef NOT_FLOPPY
-	mov si, dx
-	mov dl, [si]
 	mov [drive], dl
 %endif
 	call clear

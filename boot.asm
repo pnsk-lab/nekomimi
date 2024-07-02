@@ -21,7 +21,7 @@ boot:
 	mov es, bx
 	mov bx, LOAD_AT
 	int 0x13
-	mov dx, drive
+	mov dl, [drive]
 	jmp 0:LOAD_AT
 .err:
 	mov al, '!'

@@ -25,7 +25,7 @@ main.bin: main.asm var.asm util.asm nekomimi.asm
 	nasm -DLOAD_AT=$(LOAD_AT) $(CUSTOM) -DSIZE=\"`expr $(BASIC_SIZE) \* 512 / 1024`K\" -DBASIC_SIZE=$(BASIC_SIZE) -D$(TARGET) -D$(MODE) -DKB=$(KB) -DGRAPHIC_MODE=$(GRAPHIC_MODE) -fbin -o main.bin main.asm
 
 run: nekomimi.img
-	qemu-system-i386 -fda nekomimi.img
+	qemu-system-i386 -fda nekomimi.img -monitor stdio
 
 get-version:
 	@cat main.asm | grep "define VERSION" | grep -Eo "[0-9]+\.[0-9]+(-[a-z\-]+)?"
