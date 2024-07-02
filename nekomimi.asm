@@ -76,7 +76,6 @@ rundirective:
 	call uppercase
 	call get_variable_address
 	mov di, bx
-	jmp $
 	jmp .brk
 .synerr:
 	mov byte [retcode], SYNTAX_ERROR
