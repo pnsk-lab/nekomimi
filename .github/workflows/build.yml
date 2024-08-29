@@ -3,8 +3,8 @@ name: Build Nekomimi
 on:
   workflow_dispatch:
   push:
-  schedule:
-  - cron: "0 */6 * * *"
+#  schedule:
+#  - cron: "0 */6 * * *"
 
 concurrency:
   group: "build"
